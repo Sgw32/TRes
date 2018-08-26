@@ -3,7 +3,7 @@ format long
 thetaa1 = 1000; % начальная температура
 w = 2*pi*1/4/3600; %частота
 t = 0:10:3600; %время
-q1rad = 1800000; %%переменная лучистая компонента
+q1rad = 900000; %%переменная лучистая компонента
 k = 1; %% показатель поглощения
 sigma = 100; %% показатель рассеяния
 B = 20; %%коэффициент теплоотдачи воздушная среда-поверхность
@@ -159,7 +159,7 @@ c2 = ((Kt*sqrt(w./(2*at))*F1)-(Kt*sqrt(w./(2*at))+B)*F2)./delta; %%3.25
 psi = asin(c2/(c1*c1+c2*c2));
 CC1 = sqrt(c1*c1+c2*c2);
 CC2 = b*(1-A)./(sqrt(w.*w+at.*at.*b.*b.*b.*b)).*q1rad./c/rho;
-theta = CC1*cos(w.*t-psi)-CC2.*cos(w.*t-phi1_2);
+theta = CC1*cos(w.*t-psi)-CC2.*cos(w.*t-phi1_3);
 
 hold on
 plot(t/3600/4*2*pi,theta,'k--')
@@ -170,3 +170,18 @@ t(maxx)/3600/4*2*pi
 phi1_3
 
 legend('k=1','k=1','k=2','k=2', 'sigma=400', 'sigma=400','Kt=0.01','Kt=0.01','qrad');
+
+%%Z profile (at t=1800)
+
+figure 
+t=1800;
+z = 0:0.001:0.3;
+theta = CC1*cos(w.*t-psi-sqrt(w/2/at).*z).*exp(-sqrt(w/2/at).*z)-CC2.*cos(w.*t-phi1_3).*exp(-b.*z);
+plot(z,theta);
+title(sprintf('Z profile at t=%d',t));
+xlabel('{\itDepth Z}, m');
+ylabel('{\itTemperature}, C');
+set(gca, 'FontName', 'Arial')
+set(gcf,'color','w');
+
+
