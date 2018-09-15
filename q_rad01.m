@@ -1,6 +1,10 @@
 close all
+clc
 format long
-thetaa1 = 1000; % начальная температура
+
+%%INITIAL CONDITIONS
+
+thetaa1 = 500; % начальная температура
 w = 2*pi*1/4/3600; %частота
 t = 0:10:3600; %время
 q1rad = 900000; %%переменная лучистая компонента
@@ -16,172 +20,175 @@ at = Kt/c/rho; %%коэффициент температуропроводности
 z = 0:0.0005:0.01;
 deltaphi_rad_conv = 0;
 
+
+%%AMBIENT TEMPERATURE PLOT
+
 thetaa = thetaa1*cos(w*t);
 figure
 title('Ambient temperature');
-plot(t,thetaa);
+plot(t,thetaa+1000,'k-');
 xlabel('{\itTime}, s');
-ylabel('{\itTemperature}, C');
+ylabel('{\itT}, C');
 set(gca, 'FontName', 'Arial')
+set(gca, 'FontSize', 14);
 set(gcf,'color','w');
+print('amb_temp','-dpng');
+%%
+
+%%HEAT FLUX PLOT
+
 qrad = q1rad*cos(w*t-deltaphi_rad_conv);
 
 figure
-title('Heat flux chart');
-plot(t,qrad);
+title('Heat flux plot');
+plot(t,qrad+q1rad,'k-');
 xlabel('{\itTime}, s');
 ylabel('{\itHeat flux}, MW/m^2');
 set(gca, 'FontName', 'Arial')
+set(gca, 'FontSize', 14);
 set(gcf,'color','w');
+print('qrad_cos','-dpng');
 
 
-l2 = sin(deltaphi_rad_conv);
-l1 = cos(deltaphi_rad_conv);
-phi1 = asin((l2*at*b*b-l1*w)/(sqrt(w*w+at*at*b*b*b*b)));
-d1 = -(l1*at*b*b+l2*w)/(w*w+at*at*b^4);
-d2 = (w*l1-at*b*b*l2)/(w*w+at*at*b^4);
-F1 = B*thetaa1-(Kt*b+B)*q1rad*b*(1-A)*d1/c/rho;
-F2 = q1rad*b*(1-A)*(Kt*b+B)*d2/c/rho;
-delta = (Kt*sqrt(w/(2*at))+B)^2+Kt^2*w/(2*at);
+%%heat flux and thetaa
 
-c1 = ((Kt*sqrt(w./(2*at))+B)*F1+Kt*sqrt(w/(2*at))*F2)./delta; %%3.25
-c2 = ((Kt*sqrt(w./(2*at))*F1)-(Kt*sqrt(w./(2*at))+B)*F2)./delta; %%3.25
-
-psi = asin(c2/(c1*c1+c2*c2));
-CC1 = sqrt(c1*c1+c2*c2);
-CC2 = b*(1-A)./(sqrt(w.*w+at.*at.*b.*b.*b.*b)).*q1rad./c/rho;
-theta = CC1*cos(w.*t-psi)-CC2.*cos(w.*t-phi1);
+%%
+deltaphi_rad_conv = 0;
+%%
 figure
-plot(t/3600/4*2*pi,theta)
+
+%Initial
+[theta phi1] = rad_f(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
+plot(t/3600/4*2*pi,theta,'k--')
 maxx = find(theta==max(theta));
 hold on
-plot(t(maxx)/3600/4*2*pi,max(theta),'rx');
-title('Surface temperature (3.28)');
-xlabel('Время, с');
-ylabel('Температура, С');
-xlabel('{\itTime}, s');
-ylabel('{\itTemperature}, C');
-set(gca, 'FontName', 'Arial')
-set(gcf,'color','w');
-
+plot(t(maxx)/3600/4*2*pi,max(theta),'kx');
 t(maxx)/3600/4*2*pi
 phi1
 
-%%%%2
 
+%k=2 sigma=100
 k = 2; %% показатель поглощения
 sigma = 100; %% показатель рассеяния
-B = 20; %%коэффициент теплоотдачи воздушная среда-поверхность
-b = sqrt(k*k+k*sigma);
-A = (b-k)/(b+k); %% альбедо
 
-l2 = sin(deltaphi_rad_conv);
-l1 = cos(deltaphi_rad_conv);
-phi1_1 = asin((l2*at*b*b-l1*w)/(sqrt(w*w+at*at*b*b*b*b)));
-d1 = -(l1*at*b*b+l2*w)/(w*w+at*at*b^4);
-d2 = (w*l1-at*b*b*l2)/(w*w+at*at*b^4);
-F1 = B*thetaa1-(Kt*b+B)*q1rad*b*(1-A)*d1/c/rho;
-F2 = q1rad*b*(1-A)*(Kt*b+B)*d2/c/rho;
-delta = (Kt*sqrt(w/(2*at))+B)^2+Kt^2*w/(2*at);
-
-c1 = ((Kt*sqrt(w./(2*at))+B)*F1+Kt*sqrt(w/(2*at))*F2)./delta; %%3.25
-c2 = ((Kt*sqrt(w./(2*at))*F1)-(Kt*sqrt(w./(2*at))+B)*F2)./delta; %%3.25
-
-psi = asin(c2/(c1*c1+c2*c2));
-CC1 = sqrt(c1*c1+c2*c2);
-CC2 = b*(1-A)./(sqrt(w.*w+at.*at.*b.*b.*b.*b)).*q1rad./c/rho;
-theta = CC1*cos(w.*t-psi)-CC2.*cos(w.*t-phi1_1);
-
+[theta phi1_1] = rad_f(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
 hold on
-plot(t/3600/4*2*pi,theta)
+plot(t/3600/4*2*pi,theta,'k:')
 maxx = find(theta==max(theta));
 hold on
-plot(t(maxx)/3600/4*2*pi,max(theta),'gx');
-
+plot(t(maxx)/3600/4*2*pi,max(theta),'kx');
 t(maxx)/3600/4*2*pi
 phi1_1
-%%% sigma = 400
 
+%k=1 sigma = 400
 k = 1; %% показатель поглощения
-sigma = 4000; %% показатель рассеяния
-B = 20; %%коэффициент теплоотдачи воздушная среда-поверхность
-b = sqrt(k*k+k*sigma);
-A = (b-k)/(b+k); %% альбедо
-
-l2 = sin(deltaphi_rad_conv);
-l1 = cos(deltaphi_rad_conv);
-phi1_2 = asin((l2*at*b*b-l1*w)/(sqrt(w*w+at*at*b*b*b*b)));
-d1 = -(l1*at*b*b+l2*w)/(w*w+at*at*b^4);
-d2 = (w*l1-at*b*b*l2)/(w*w+at*at*b^4);
-F1 = B*thetaa1-(Kt*b+B)*q1rad*b*(1-A)*d1/c/rho;
-F2 = q1rad*b*(1-A)*(Kt*b+B)*d2/c/rho;
-delta = (Kt*sqrt(w/(2*at))+B)^2+Kt^2*w/(2*at);
-
-c1 = ((Kt*sqrt(w./(2*at))+B)*F1+Kt*sqrt(w/(2*at))*F2)./delta; %%3.25
-c2 = ((Kt*sqrt(w./(2*at))*F1)-(Kt*sqrt(w./(2*at))+B)*F2)./delta; %%3.25
-
-psi = asin(c2/(c1*c1+c2*c2));
-CC1 = sqrt(c1*c1+c2*c2);
-CC2 = b*(1-A)./(sqrt(w.*w+at.*at.*b.*b.*b.*b)).*q1rad./c/rho;
-theta = CC1*cos(w.*t-psi)-CC2.*cos(w.*t-phi1_2);
-
+sigma = 400; %% показатель рассеяния
+[theta phi1_2] = rad_f(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
 hold on
-plotyy(t/3600/4*2*pi,theta,t/3600/4*2*pi,qrad)
+[hAx,hLine1,hLine2] = plotyy(t/3600/4*2*pi,theta,t/3600/4*2*pi,qrad)
+hLine1.LineStyle = '--';
+hLine2.LineStyle = ':';
+hLine1.Color = 'k';
+hLine1.Color = 'k';
 maxx = find(theta==max(theta));
 hold on
-plot(t(maxx)/3600/4*2*pi,max(theta),'bx');
+plot(t(maxx)/3600/4*2*pi,max(theta),'kx');
 t(maxx)/3600/4*2*pi
 phi1_2
 
 %%Change Kt
-
 Kt = 0.01; %% коэффициент теплопроводности
-at = Kt/c/rho; %%коэффициент температуропроводности
-
 k = 1; %% показатель поглощения
-sigma = 4000; %% показатель рассеяния
-B = 20; %%коэффициент теплоотдачи воздушная среда-поверхность
-b = sqrt(k*k+k*sigma);
-A = (b-k)/(b+k); %% альбедо
-
-l2 = sin(deltaphi_rad_conv);
-l1 = cos(deltaphi_rad_conv);
-phi1_3 = asin((l2*at*b*b-l1*w)/(sqrt(w*w+at*at*b*b*b*b)));
-d1 = -(l1*at*b*b+l2*w)/(w*w+at*at*b^4);
-d2 = (w*l1-at*b*b*l2)/(w*w+at*at*b^4);
-F1 = B*thetaa1-(Kt*b+B)*q1rad*b*(1-A)*d1/c/rho;
-F2 = q1rad*b*(1-A)*(Kt*b+B)*d2/c/rho;
-delta = (Kt*sqrt(w/(2*at))+B)^2+Kt^2*w/(2*at);
-
-c1 = ((Kt*sqrt(w./(2*at))+B)*F1+Kt*sqrt(w/(2*at))*F2)./delta; %%3.25
-c2 = ((Kt*sqrt(w./(2*at))*F1)-(Kt*sqrt(w./(2*at))+B)*F2)./delta; %%3.25
-
-psi = asin(c2/(c1*c1+c2*c2));
-CC1 = sqrt(c1*c1+c2*c2);
-CC2 = b*(1-A)./(sqrt(w.*w+at.*at.*b.*b.*b.*b)).*q1rad./c/rho;
-theta = CC1*cos(w.*t-psi)-CC2.*cos(w.*t-phi1_3);
-
+sigma = 400; %% показатель рассеяния
+[theta phi1_3] = rad_f(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
 hold on
-plot(t/3600/4*2*pi,theta,'k--')
+plot(t/3600/4*2*pi,theta,'k-.')
 maxx = find(theta==max(theta));
 hold on
 plot(t(maxx)/3600/4*2*pi,max(theta),'kx');
 t(maxx)/3600/4*2*pi
 phi1_3
 
-legend('k=1','k=1','k=2','k=2', 'sigma=400', 'sigma=400','Kt=0.01','Kt=0.01','qrad');
-
+%%legend('k=1','k=1','k=2','k=2', 'sigma=400', 'sigma=400','Kt=0.01','Kt=0.01','qrad');
+title('Surface temperature');
+xlabel('Время, с');
+ylabel('Температура, С');
+xlabel('{\itTime}, s');
+ylabel('{\itTemperature}, C');
+set(gca, 'FontName', 'Arial')
+set(gca, 'FontSize', 14);
+set(gcf,'color','w');
+print('surf_temp','-dpng');
 %%Z profile (at t=1800)
 
 figure 
 t=1800;
 z = 0:0.001:0.3;
-theta = CC1*cos(w.*t-psi-sqrt(w/2/at).*z).*exp(-sqrt(w/2/at).*z)-CC2.*cos(w.*t-phi1_3).*exp(-b.*z);
-plot(z,theta);
+%theta = CC1*cos(w.*t-psi-sqrt(w/2/at).*z).*exp(-sqrt(w/2/at).*z)-CC2.*cos(w.*t-phi1_3).*exp(-b.*z);
+[theta phi1_3] = rad_f_z(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
+plot(z,theta,'k-');
 title(sprintf('Z profile at t=%d',t));
 xlabel('{\itDepth Z}, m');
 ylabel('{\itTemperature}, C');
 set(gca, 'FontName', 'Arial')
+set(gca, 'FontSize', 14);
 set(gcf,'color','w');
+print(sprintf('1zproft%d',t),'-dpng');
+%%TODO для каждого графика.
 
+%%Терморезонанс
 
+phi = 0:pi/72*pi/72:pi/2*pi/2;
+
+c = 450; %%теплоёмкость
+rho = 4000; %%плотность
+Kt = 1; %% коэффициент теплопроводности
+at = Kt/c/rho; %%коэффициент температуропроводности
+
+phi = sqrt(phi);
+t(1)=3600;
+t(2)=3600/2;
+t(3)=3600/4;
+b=zeros(3,length(phi));
+b(1,:)=sqrt(2*pi./(tan(phi)+1e-10)./(at*t(1)));
+b(2,:)=sqrt(2*pi./(tan(phi)+1e-10)./(at*t(2))); %% 3.32 показатель ослабления излучения светорассеивающей среды в условиях многократного рассения.
+b(3,:)=sqrt(2*pi./(tan(phi)+1e-10)./(at*t(3))); %% 3.32 показатель ослабления излучения светорассеивающей среды в условиях многократного рассения.
+
+A=zeros(16,length(phi)); %альбедо, коэффициент отражения полубесконечного слоя вещества
+k=zeros(2,1);
+k(1,1)=1;
+k(2,1)=10;
+
+A(1,:)=(b(1,:)-k(1,1))./(b(1,:)+k(1,1));
+A(2,:)=(b(1,:)-k(2,1))./(b(1,:)+k(2,1));
+
+A(3,:)=(b(2,:)-k(1,1))./(b(2,:)+k(1,1));
+A(4,:)=(b(2,:)-k(2,1))./(b(2,:)+k(2,1));
+
+A(5,:)=(b(3,:)-k(1,1))./(b(3,:)+k(1,1));
+A(6,:)=(b(3,:)-k(2,1))./(b(3,:)+k(2,1));
+
+figure 
+
+plot(phi,A(1,:).*100,'k--'); 
+hold on
+plot(phi,A(2,:).*100,'k--'); 
+hold on
+plot(phi,A(3,:).*100,'k--'); 
+hold on
+plot(phi,A(4,:).*100,'k--'); 
+hold on
+plot(phi,A(5,:).*100,'k--'); 
+hold on
+plot(phi,A(6,:).*100,'k--'); 
+hold on
+
+xlabel('{\it\phi}, rad');
+ylabel('{\itAlbedo}, %');
+set(gca, 'FontName', 'Arial')
+set(gca, 'FontSize', 14);
+set(gcf,'color','w');
+set(gca,'XTick',0:pi/4:pi/2) 
+set(gca,'XTickLabel',{'0','\pi/4','\pi/2'}) 
+ylim([0 100])
+print('tres1','-dpng');
