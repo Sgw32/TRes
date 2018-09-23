@@ -1,24 +1,4 @@
 close all
-clc
-format long
-
-%%INITIAL CONDITIONS
-
-thetaa1 = 500; % начальная температура
-w = 2*pi*1/4/3600; %частота
-t = 0:10:3600; %время
-q1rad = 20000; %%переменная лучистая компонента
-k = 1; %% показатель поглощения
-sigma = 100; %% показатель рассеяния
-B = 20; %%коэффициент теплоотдачи воздушная среда-поверхность
-b = sqrt(k*k+k*sigma);
-A = (b-k)/(b+k); %% альбедо
-c = 450; %%теплоёмкость
-rho = 1000; %%плотность
-Kt = 0.1; %% коэффициент теплопроводности
-at = Kt/c/rho; %%коэффициент температуропроводности
-z = 0:0.0005:0.01;
-deltaphi_rad_conv = 0;
 
 thetaa = thetaa1*cos(w*t);
 
@@ -34,7 +14,7 @@ ax.YTickMode = 'manual';
 
 deltaphi_rad_conv = 0;
 qrad = q1rad*cos(w*t-deltaphi_rad_conv);
-[a h1 h2] = plotyy(t,thetaa+1000,t,qrad+q1rad);
+[a h1 h2] = plotyy(t,thetaa+add,t,qrad+q1rad);
 h1.Color = 'k';
 h2.Color = 'k';
 h2.LineStyle = '--';
@@ -87,7 +67,7 @@ for j = 1:4
         %%legend('\theta_{a}(t)','q^{rad}(t)');
 
         xlabel('{\it\phi_{conv}^{rad}} ,\circ');
-        ylabel('{\it\theta_{A}(t)}, C');
+        ylabel('{\it\theta_{A}(t)}, K');
         %a(1).Visible = false;
         a(2).Visible = 'off';
         gca1 = a(1);
@@ -101,4 +81,4 @@ for j = 1:4
 end
 
 set(gcf,'PaperPositionMode','auto')
-print('theta_qrad','-dpng')
+print('results\theta_qrad','-dpng')

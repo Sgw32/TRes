@@ -5,7 +5,7 @@ format long
 %%INITIAL CONDITIONS
 
 thetaa1 = 500; % начальная температура
-w = 2*pi*1/4/3600; %частота
+w = 2*pi*1/4/360; %частота
 t = 0:10:3600*4*5; %время
 q1rad = 20000; %%переменная лучистая компонента
 k = 1; %% показатель поглощения
@@ -26,10 +26,10 @@ h = figure('rend','painters','pos',[100 100 650 700])
 deltaphi_rad_conv = 30*pi/180;
 
 [theta phi1] = rad_f_conv(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-plot(t/3600/4*2*pi,add+theta,'k')
+plot(t,add+theta,'k')
 hold on
 [theta phi1] = rad_f_rad(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-plot(t/3600/4*2*pi,add+theta,'k--')
+plot(t,add+theta,'k--')
 hold on
 
 xlabel('{\itt} ,s');

@@ -46,7 +46,7 @@ phi1
 deltaphi_rad_conv = 60;
 
 [theta phi1] = rad_f(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-plot(t/3600/4*2*pi,add+theta,'k--')
+plot(t/3600/4*2*pi,add*2+theta,'k--')
 maxx = find(theta==max(theta));
 hold on
 plot(t(maxx)/3600/4*2*pi,add+max(theta),'kx');
@@ -56,7 +56,7 @@ phi1
 deltaphi_rad_conv = 90;
 
 [theta phi1] = rad_f(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-plot(t/3600/4*2*pi,add+theta,'k--')
+plot(t/3600/4*2*pi,add*2+theta,'k--')
 maxx = find(theta==max(theta));
 hold on
 plot(t(maxx)/3600/4*2*pi,add+max(theta),'kx');
@@ -64,7 +64,7 @@ t(maxx)/3600/4*2*pi
 phi1
 
 xlabel('{\it\phi_{conv}^{rad}} ,\circ');
-ylabel('{\it\theta_{A}(t)}, C');
+ylabel('{\it\theta_{A}(t)}, K');
 set(gca, 'FontSize', 25);
 set(gcf,'color','w');
 set(gcf,'color','w');

@@ -1,12 +1,12 @@
 close all
 
 h = figure('rend','painters','pos',[100 100 650 700]) 
-deltaphi_rad_conv = 0;
-t=3600;
+
+t=4800;
 z = 0:0.001:0.3;
 %theta = CC1*cos(w.*t-psi-sqrt(w/2/at).*z).*exp(-sqrt(w/2/at).*z)-CC2.*cos(w.*t-phi1_3).*exp(-b.*z);
-[theta phi1_3] = rad_f_z(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-plot(z,add+theta,'r-');
+%[theta phi1_3] = rad_f_z(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
+%plot(z,add+theta,'r-');
 %title(sprintf('Z profile at t=%d',t));
 
 

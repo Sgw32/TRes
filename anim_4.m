@@ -1,7 +1,8 @@
 close all
 
 thetaa = thetaa1*cos(w*t);
-
+w = 2*pi*1/4/3600; %частота
+t = 0:10:3600*8; %время
 loops = 30;
 F(loops) = struct('cdata',[],'colormap',[]);
 
@@ -26,14 +27,14 @@ a(1).XColor = 'k';
 a(2).XColor = 'k';
 a(1).YColor = 'k';
 a(2).YColor = 'k';
-a(1).XTick = [ 0, 1200, 2400, 3600 ];
-a(2).XTick = [ 0, 1200, 2400, 3600 ];
-a(1).XTickLabels = { '0', '30', '60', '90' };
-a(2).XTickLabels = { '0', '30', '60', '90' };
-a(1).YTick = [1000 1000+(thetaa1)/2 thetaa1+1000];
-a(2).YTick = [q1rad q1rad*1.5 q1rad*2];
-a(1).YLim = [1000 thetaa1+1000];
-a(2).YLim = [q1rad q1rad*2];
+a(1).XTick = [ 0, 3600*2, 3600*4, 3600*6 ];
+a(2).XTick = [ 0, 3600*2, 3600*4, 3600*6 ];
+a(1).XTickLabels = { '0', '3600*2', '3600*4', '3600*4' };
+a(2).XTickLabels = { '0', '3600*2', '3600*4', '3600*4' };
+a(1).YTick = [-thetaa1+1000 1000 thetaa1+1000];
+a(2).YTick = [0 q1rad*1 q1rad*2];
+a(1).YLim = [500 thetaa1+1000];
+a(2).YLim = [0 q1rad*2];
 title('Ambient temperature vs heat flux');
 
 %%xlabel('{\itTime}, s');
@@ -66,14 +67,14 @@ for j = 1:loops
         a(2).XColor = 'k';
         a(1).YColor = 'k';
         a(2).YColor = 'k';
-        a(1).XTick = [ 0, 1200, 2400, 3600 ];
-        a(2).XTick = [ 0, 1200, 2400, 3600 ];
-        a(1).XTickLabels = { '0', '30', '60', '90' };
-        a(2).XTickLabels = { '0', '30', '60', '90' };
-        a(1).YTick = [1000 1000+(thetaa1)/2 thetaa1+1000];
-        a(2).YTick = [q1rad q1rad*1.5 q1rad*2];
-        a(1).YLim = [1000 thetaa1+1000];
-        a(2).YLim = [q1rad q1rad*2];
+        a(1).XTick = [ 0, 3600*2, 3600*4, 3600*6 ];
+        a(2).XTick = [ 0, 3600*2, 3600*4, 3600*6 ];
+        a(1).XTickLabels = { '0', '3600*2', '3600*4', '3600*4' };
+        a(2).XTickLabels = { '0', '3600*2', '3600*4', '3600*4' };
+        a(1).YTick = [-thetaa1+1000 1000 thetaa1+1000];
+        a(2).YTick = [0 q1rad*1 q1rad*2];
+        a(1).YLim = [500 thetaa1+1000];
+        a(2).YLim = [0 q1rad*2];
         title('Ambient temperature vs heat flux');
 
         %%xlabel('{\itTime}, s');
