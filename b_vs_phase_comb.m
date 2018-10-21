@@ -23,21 +23,20 @@ A(2,:)=(b(2,:)-kappa)./(b(2,:)+kappa);
 
 h = figure('rend','painters','pos',[100 100 650 700]) 
 
-plot(phi,A(1,:).*100,'k'); %1a
+plot(phi,b(1,:),'k'); %1a
 hold on
-plot(phi,A(2,:).*100,'k--'); %1a
+plot(phi,b(2,:),'k--'); %1a
 hold on
 
 xlabel('{\it\phi}, rad');
-ylabel('{\itAlbedo}, %');
+ylabel('{\itb}, 1/m');
 set(gca, 'FontName', 'Arial')
 set(gca, 'Position', [0.2 0.2 0.65 0.65])
 set(gca, 'FontSize', 25);
 set(gcf,'color','w');
-%set(gca,'XTick',pi/6*31/30:pi/4:pi/2*89/90) 
-%set(gca,'XTickLabel',{'\pi/6','\pi/4'}) 
+%set(gca,'XTick',0:pi/4:pi/2) 
+%set(gca,'XTickLabel',{'0','\pi/4','\pi/2'}) 
 xlim([pi/6*31/30 pi/2*89/90])
-ylim([30 100])
+%ylim([30 100])
 set(gcf,'PaperPositionMode','auto')
-print('results\tres1_comb','-dpng');
-
+print('results\b_vs_phase','-dpng');
