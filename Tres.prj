@@ -1,0 +1,138 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration build-checksum="2039615266" file="C:\Projects\Freelance\Science\Program\TRes\Tres.prj" location="C:\Projects\Freelance\Science\Program\TRes" name="Tres" preferred-package-location="C:\Projects\Freelance\Science\Program\TRes\TRes\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
+    <param.appname>TRes</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>1.0</param.version>
+    <param.authnamewatermark>Fyodor Zagumennov, Vladimir Merzlikin</param.authnamewatermark>
+    <param.email>sgw32@yandex.ru</param.email>
+    <param.company>PHL</param.company>
+    <param.summary />
+    <param.description>Температурный расчёт при воздействии переменного лучистого и конвективного теплового потока.</param.description>
+    <param.screenshot>${PROJECT_ROOT}\tres1_3d.png</param.screenshot>
+    <param.guid />
+    <param.installpath.string>\PHL\TRes\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\TRes\for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}\TRes\for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}\TRes\for_redistribution</param.output>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.embed.ctf>true</param.embed.ctf>
+    <param.server.ctf>${PROJECT_ROOT}\TRes\for_testing\.ctf</param.server.ctf>
+    <param.server.readme>${PROJECT_ROOT}\TRes\for_testing\readme.txt</param.server.readme>
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.required.mcr.products>
+      <item>35000</item>
+      <item>35001</item>
+    </param.required.mcr.products>
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MCRInst</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.version />
+      <param.summary />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.embed.ctf />
+      <param.server.ctf />
+      <param.server.readme />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\tres_gui.m</file>
+    </fileset.main>
+    <fileset.resources>
+      <file>${PROJECT_ROOT}\gui_albedo_vs_rad_comb.m</file>
+      <file>${PROJECT_ROOT}\gui_anim_2_static.m</file>
+      <file>${PROJECT_ROOT}\gui_q_rad01_3d.m</file>
+      <file>${PROJECT_ROOT}\gui_rad_prof_anim_comb.m</file>
+      <file>${PROJECT_ROOT}\gui_z0radconv_ext_sum.m</file>
+      <file>${PROJECT_ROOT}\rad_f_conv.m</file>
+      <file>${PROJECT_ROOT}\rad_f_rad.m</file>
+      <file>${PROJECT_ROOT}\rad_f_z.m</file>
+      <file>${PROJECT_ROOT}\rad_f_z_conv.m</file>
+      <file>${PROJECT_ROOT}\rad_f_z_rad.m</file>
+      <file>${PROJECT_ROOT}\tres_gui.fig</file>
+    </fileset.resources>
+    <fileset.package />
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}\TRes\for_testing" name="readme.txt" optional="true">C:\Projects\Freelance\Science\Program\TRes\TRes\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\TRes\for_testing" name="TRes.exe" optional="false">C:\Projects\Freelance\Science\Program\TRes\TRes\for_testing\TRes.exe</file>
+      <file location="${PROJECT_ROOT}\TRes\for_testing" name="splash.png" optional="false">C:\Projects\Freelance\Science\Program\TRes\TRes\for_testing\splash.png</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2014b</root>
+      <toolboxes>
+        <toolbox name="matlabhdlcoder" />
+        <toolbox name="fixedpoint" />
+        <toolbox name="embeddedcoder" />
+        <toolbox name="matlabcoder" />
+      </toolboxes>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.1</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
