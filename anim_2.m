@@ -71,6 +71,7 @@ level = 10000;
 len = 1000;
 
 q1rad1 = [ones(level,1)' ones(length(t)-level,1)'.*(0.65+exp(-(1:1:(length(t)-level))/len)*0.35)];
+thetaaa1 = [ones(level,1)' ones(length(t)-level,1)'.*(exp(-2.*(1:1:(length(t)-level))/len)*1)];
 %exp(-(1:1:len))
 for j = 1:loops
         deltaphi_rad_conv = 2*pi*(j)/loops;
@@ -78,9 +79,9 @@ for j = 1:loops
         qrad = q1rad*cos(w*t-deltaphi_rad_conv-pi/3);
         
         
-        [a h1 h2] = plotyy(t,thetaa+add*2,t,qrad.*q1rad1+q1rad.*q1rad1);
-        h1.Color = [0 0.5 0];
-        h2.Color = [1 0.5 0];
+        [a h1 h2] = plotyy(t,thetaaa1.*thetaa+add*2,t,qrad.*q1rad1+q1rad.*q1rad1);
+        h1.Color = [0 0 0];
+        h2.Color = [0 0 0];
         h2.LineWidth = 4;
         h2.LineStyle = '--';
         
@@ -113,8 +114,8 @@ a(1).XTick = [ 0, 1200, 2400, 3600 ];
         ylabel('{\it\theta_{A}(t)}, K');
         set(gca, 'FontName', 'Arial')
         set(gca, 'FontSize', 14);
-        set(gcf,'color',[0.95 0.95 0.95]);
-        set(gca,'color',[0.95 0.95 0.95]);
+        set(gcf,'color',[1 1 1 ]);
+        set(gca,'color',[1 1 1 ]);
         drawnow
         F(j) = getframe(h);
         frame = getframe(h);

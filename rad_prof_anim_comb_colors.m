@@ -19,21 +19,21 @@ z = 0:0.001:0.3;
 deltaphi_rad_conv = 30*pi/180;
 hold on
 [theta phi1_3] = rad_f_z(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-plot(z,2*add+theta,'b');
+plot(z,2*add+theta,'k-','LineWidth',3);
 
 %conv
 
 deltaphi_rad_conv = 30*pi/180;
 hold on
 [theta phi1_3] = rad_f_z_conv(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-plot(z,add+theta,'r');
+plot(z,add+theta,'k-.','LineWidth',3);
 
 %rad
 
 deltaphi_rad_conv = 30*pi/180;
 hold on
 [theta phi1_3] = rad_f_z_rad(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-plot(z,add+theta,'color',[.8 0.5 .0]);
+plot(z,add+theta,'k--','LineWidth',3);
 
 %__________
 
@@ -57,7 +57,8 @@ frame = getframe(h);
 im = frame2im(frame);
 [imind,cm] = rgb2ind(im,256);
 % Write to the GIF File 
-imwrite(imind,cm,'results\rad_prof_anim_comb_colors.gif','gif', 'Loopcount',inf);
+print('rad_prof_anim_comb_color','-dpng');
+imwrite(imind,cm,'rad_prof_anim_comb_colors.gif','gif', 'Loopcount',inf);
 
 
 for j = 1:loops
@@ -73,21 +74,21 @@ for j = 1:loops
         deltaphi_rad_conv = 30*pi/180;
         hold on
         [theta phi1_3] = rad_f_z(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-        plot(z,2*add+theta,'b');
+        plot(z,2*add+theta,'k-','LineWidth',3);
 
         %conv
 
         deltaphi_rad_conv = 30*pi/180;
         hold on
         [theta phi1_3] = rad_f_z_conv(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-        plot(z,add+theta,'r');
+        plot(z,add+theta,'k-.','LineWidth',3);
 
         %rad
 
         deltaphi_rad_conv = 30*pi/180;
         hold on
         [theta phi1_3] = rad_f_z_rad(thetaa1,w,t,q1rad,k,sigma,B,c,rho,Kt,z,deltaphi_rad_conv);
-        plot(z,add+theta,'color',[.8 0.5 .0]);
+        plot(z,add+theta,'k--','LineWidth',3);
 
         %__________
         
@@ -109,5 +110,5 @@ for j = 1:loops
         im = frame2im(frame);
         [imind,cm] = rgb2ind(im,256);
         % Write to the GIF File 
-          imwrite(imind,cm,'results\rad_prof_anim_comb_colors.gif','gif','WriteMode','append');
+          imwrite(imind,cm,'rad_prof_anim_comb_colors.gif','gif','WriteMode','append');
 end
